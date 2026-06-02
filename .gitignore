@@ -5,6 +5,7 @@ node_modules/
 # Variáveis de ambiente
 .env
 **/.env
+.vscode/
 
 # Logs
 *.log

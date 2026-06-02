@@ -1,12 +1,9 @@
--- Schema do banco de dados
+-- Schema do banco de dados atualizado
 -- psql -h localhost -U postgres -d lectio -f schema.sql
 
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
 CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(200) PRIMARY KEY,
   name VARCHAR(200) NOT NULL,
-  email VARCHAR(200) UNIQUE NOT NULL,
   password VARCHAR(200) NOT NULL
 );
 
@@ -17,12 +14,12 @@ CREATE TABLE IF NOT EXISTS books (
   resume TEXT,
   total_pages INT,
   assessment FLOAT,
-  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  user_email VARCHAR(200) NOT NULL REFERENCES users(email) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS reading_progress (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  user_email VARCHAR(200) NOT NULL REFERENCES users(email) ON DELETE CASCADE ON UPDATE CASCADE,
   book_id UUID NOT NULL REFERENCES books(id) ON DELETE CASCADE,
   current_page INT DEFAULT 0,
   status VARCHAR(50),
