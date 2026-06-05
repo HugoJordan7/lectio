@@ -4,6 +4,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 import readingProgressRoutes from './routes/readingProgressRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(logger);
 app.use('/users', userRoutes);
 app.use('/books', bookRoutes);
 app.use('/readingProgress', readingProgressRoutes);
+app.use('/categories', categoryRoutes);
 
 // --- Health check ---
 app.get('/', (req, res) => {
@@ -24,7 +26,8 @@ app.get('/', (req, res) => {
     rotas: [
       '/users',
       '/books',
-      '/readingProgress'
+      '/readingProgress',
+      '/categories'
     ]
   });
 });
