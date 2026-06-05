@@ -29,23 +29,13 @@ CREATE TABLE IF NOT EXISTS reading_progress (
 
 CREATE TABLE IF NOT EXISTS categories (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  color VARCHAR(7) DEFAULT '#5aaefd',
+  user_email VARCHAR(200) NOT NULL REFERENCES users(email) ON DELETE CASCADE ON UPDATE CASCADE,
   name VARCHAR(200) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS tags (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(200) NOT NULL,
-  color VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS books_categories (
   book_id UUID NOT NULL REFERENCES books(id) ON DELETE CASCADE,
   category_id UUID NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
   PRIMARY KEY (book_id, category_id)
-);
-
-CREATE TABLE IF NOT EXISTS books_tags (
-  book_id UUID NOT NULL REFERENCES books(id) ON DELETE CASCADE,
-  tag_id UUID NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
-  PRIMARY KEY (book_id, tag_id)
 );
