@@ -5,8 +5,14 @@ import userRoutes from './routes/userRoutes.js';
 import bookRoutes from './routes/bookRoutes.js';
 import readingProgressRoutes from './routes/readingProgressRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
+import cors from 'cors';
 
 const app = express();
+
+// --- CORS ---
+app.use(cors({
+    origin: "http://localhost:5500"
+}));
 
 // --- Middleware ---
 app.use(express.json());
