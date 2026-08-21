@@ -9,6 +9,21 @@ export default class userController {
     } catch (err) { next(err); }
   }
 
+  async getUsers(req, res, next) {
+    try {
+      const users = await this.userService.getUsers();
+      res.json(users);
+    } catch (err) { next(err); }
+  }
+
+  async login(req, res, next) {
+    try {
+      const { email, password } = req.body;
+      const user = await this.userService.login(email, password);
+      res.json(user);
+    } catch (err) { next(err); }
+  }
+
   async createUser(req, res, next) {
     try {
       const user = await this.userService.createUser(req.body);

@@ -8,6 +8,16 @@ export default class userDAOSQLite extends userDAO {
         return result.get(email) || null;
     }
 
+    async getUsers() {
+        const result = db.prepare('SELECT email, name FROM users');
+        return result.all();
+    }
+
+    async getUserWithPassword(email) {
+        const result = db.prepare('SELECT email, name, password FROM users WHERE email = ?');
+        return result.get(email) || null;
+    }
+
     async createUser(user) {
         const { name, email, password } = user;
         const result = db.prepare('INSERT INTO users (email, name, password) VALUES (?, ?, ?) RETURNING email, name');
