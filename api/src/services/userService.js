@@ -10,6 +10,35 @@ export default class userService {
     return this.userDAO.getUser(email); 
   }
 
+  async getUsers() {
+    return this.userDAO.getUsers();
+  }
+
+  async login(email, password) {
+    const invalidCredentialsError = () => {
+      const e = new Error('E-mail ou senha inválidos.');
+      e.status = 401;
+      return e;
+    };
+
+    if (!email || !password) {
+      throw invalidCredentialsError();
+    }
+
+    const user = await this.userDAO.getUserWithPassword(email);
+    if (!user) {
+      throw invalidCredentialsError();
+    }
+
+    const senhaCorreta = await bcrypt.compare(password, user.password);
+    if (!senhaCorreta) {
+      throw invalidCredentialsError();
+    }
+
+    const { password: _senha, ...usuarioSemSenha } = user;
+    return usuarioSemSenha;
+  }
+
   async createUser(user) {
     const { name, email, password } = user;
 
