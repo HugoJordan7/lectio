@@ -10,8 +10,13 @@ import cors from 'cors';
 const app = express();
 
 // --- CORS ---
+const origensPermitidas = [
+    "http://localhost:5500",
+    "https://finance-web-eosin-five.vercel.app",
+];
+
 app.use(cors({
-    origin: "http://localhost:5500"
+    origin: origensPermitidas
 }));
 
 // --- Middleware ---
